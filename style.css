@@ -54,3 +54,6 @@ details.orderCard{padding:0;overflow:hidden;display:block}details.orderCard>summ
 .productCategories .mainCategoryBtn.active{background:#7a267f;color:#fff;border-color:#7a267f}
 .productCategories .addGroupBtn{border:1px dashed #7a267f;background:#fff;color:#7a267f;font-weight:800}
 @media(max-width:700px){.categoryLevel{flex-wrap:nowrap;overflow-x:auto;padding-bottom:6px}.categoryLevel button{flex:0 0 auto}.productCategories{padding:12px 8px}}
+
+/* 2026-11 admin usability */
+#records article{position:relative}.adminProductNo{position:absolute;top:8px;inset-inline-start:8px;background:#25212a;color:#fff;border-radius:999px;padding:4px 8px;font-size:12px;font-weight:800;z-index:3}.imagePickTile{cursor:pointer;border:2px dashed #b99bc0!important;border-radius:16px!important;min-height:150px;display:flex!important;align-items:center;justify-content:center;flex-direction:column;gap:8px;background:#faf6fb}.imagePickTile input{position:absolute;opacity:0;pointer-events:none}.imagePickIcon{font-size:46px}.imagePickMouse{font-size:24px}.imagePickTile strong{color:#6f2578;font-size:16px}@media(max-width:650px){#records{grid-template-columns:1fr!important}#records article{min-height:105px}.imagePickTile{min-height:125px}}
