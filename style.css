@@ -57,3 +57,10 @@ details.orderCard{padding:0;overflow:hidden;display:block}details.orderCard>summ
 
 /* 2026-11 admin usability */
 #records article{position:relative}.adminProductNo{position:absolute;top:8px;inset-inline-start:8px;background:#25212a;color:#fff;border-radius:999px;padding:4px 8px;font-size:12px;font-weight:800;z-index:3}.imagePickTile{cursor:pointer;border:2px dashed #b99bc0!important;border-radius:16px!important;min-height:150px;display:flex!important;align-items:center;justify-content:center;flex-direction:column;gap:8px;background:#faf6fb}.imagePickTile input{position:absolute;opacity:0;pointer-events:none}.imagePickIcon{font-size:46px}.imagePickMouse{font-size:24px}.imagePickTile strong{color:#6f2578;font-size:16px}@media(max-width:650px){#records{grid-template-columns:1fr!important}#records article{min-height:105px}.imagePickTile{min-height:125px}}
+
+/* Fixed product order + simple image management */
+.currentImageBox{display:flex;flex-direction:column;align-items:center;gap:10px;padding:14px;border:1px solid #eadfed;border-radius:14px;background:#fff}
+.currentImageBox .currentImageTitle{font-weight:800;color:#5b2563}
+.currentImageBox img{width:min(100%,320px);max-height:220px;object-fit:contain;border-radius:12px;background:#f3f3f3}
+.currentImageBox .removeImageBtn{width:min(100%,220px);padding:11px 14px}
+.currentImageBox small{color:#706873;text-align:center}
