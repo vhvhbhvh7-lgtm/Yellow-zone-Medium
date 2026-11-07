@@ -125,6 +125,9 @@ function fieldHTML(def,editingRow){
   }else control=`<select name="${key}">${selectOptions(options,raw)}</select>`;
  }
  else control=`<input name="${key}" type="${type}" ${type==='checkbox'?(raw?'checked':''):`value="${esc(raw)}"`} ${type==='number'?'min="0" step="0.01"':''} ${['name_ar','title_ar','brand_ar'].includes(key)?'required':''}>`;
+ if(['length_text','width_text','height_text'].includes(key)){
+  control=`<div class="dimensionInputWrap">${control}<button type="button" class="dimensionXBtn" data-dimension-target="${key}" aria-label="إضافة علامة الضرب">×</button></div>`;
+ }
  return `<label class="${type==='textarea'?'wide':''}">${label}${control}</label>`;
 }
 function edit(id){
@@ -142,6 +145,7 @@ function edit(id){
   $('#fields').innerHTML=`<div class="autoTranslateNote">أي تعديل في السعر أو الاسم أو الوصف يحافظ على الصور والترتيب كما هو. الصور تتغير فقط لو اخترت صورة جديدة أو حذفتها بنفسك.</div><input type="hidden" name="category" value="${esc(productCategory)}">${quick}${currentImage}${galleryPreview}<label class="wide quickUpload imagePickTile"><span class="imagePickIcon">🖼️</span><strong>${editing.image?'اضغط لاختيار صورة بديلة':'اضغط لاختيار صورة المنتج'}</strong><span class="imagePickMouse">☝️</span><input type="file" id="upload" accept="image/png,image/jpeg,image/webp"><small>لو لم تختَر صورة، الصورة الحالية تظل كما هي.</small></label><details class="advancedFields wide"><summary>إعدادات إضافية (اختياري)</summary><div class="advancedGrid">${advanced}<label class="wide">رفع صور إضافية للمنتج<input id="productGalleryUpload" type="file" multiple accept="image/png,image/jpeg,image/webp"></label></div></details>`;
   const removeImageBtn=$('#removeProductImage');if(removeImageBtn)removeImageBtn.onclick=()=>{editing.image='';const imageInput=e=>e;document.querySelectorAll('#fields [name="image"]').forEach(el=>el.value='');removeImageBtn.closest('.currentImageBox')?.remove();notify('تم تحديد الصورة للحذف. اضغط حفظ لتأكيد الحذف.');};
   document.querySelectorAll('[data-remove-gallery]').forEach(btn=>btn.onclick=()=>{const i=Number(btn.dataset.removeGallery);editing.gallery=(Array.isArray(editing.gallery)?editing.gallery:[]).filter((_,idx)=>idx!==i);btn.closest('figure')?.remove();notify('تم حذف الصورة الإضافية من القائمة. اضغط حفظ لتأكيد التعديل.');});
+  document.querySelectorAll('.dimensionXBtn').forEach(btn=>btn.onclick=()=>{const input=document.querySelector(`[name="${btn.dataset.dimensionTarget}"]`);if(!input)return;const start=input.selectionStart??input.value.length,end=input.selectionEnd??input.value.length;const left=input.value.slice(0,start).replace(/\s*$/,'');const right=input.value.slice(end).replace(/^\s*/,'');input.value=`${left}${left?' ':''}×${right?' ':''}${right}`;const pos=input.value.indexOf('×',Math.max(0,start-1))+1;input.focus();try{input.setSelectionRange(pos+1,pos+1)}catch{}});
  }else{
   $('#fields').innerHTML=`<div class="autoTranslateNote">اكتب بالعربي فقط — الترجمة الإنجليزية تُنشأ تلقائيًا عند الحفظ وتظهر للعميل عند اختيار English.</div>`+specs[table].fields.map(def=>fieldHTML(def,editing)).join('');
   if(['sm_centers','sm_pages'].includes(table))$('#fields').insertAdjacentHTML('beforeend','<label class="wide">رفع صورة (PNG / JPEG / WebP، حتى 5 ميجابايت)<input type="file" id="upload" accept="image/png,image/jpeg,image/webp"><small>أو استخدم رابط صورة موجودة بالأعلى.</small></label>');
