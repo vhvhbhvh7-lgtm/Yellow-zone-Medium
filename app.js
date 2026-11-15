@@ -91,7 +91,6 @@ function render(){
  if(table==='sm_products'){
   shown=shown.filter(r=>r.category===productCategory);
   if(productGroup!=='all')shown=shown.filter(r=>(r.group_key||'other')===productGroup);
-  if(playgroundRow!=='all')shown=shown.filter(r=>playgroundRowType(r)===playgroundRow);
   categoryBar.hidden=false;
   const sectionRows=rows.filter(r=>r.category===productCategory);
   const counts={all:sectionRows.length};sectionRows.forEach(r=>{const g=r.group_key||'other';counts[g]=(counts[g]||0)+1});
@@ -99,9 +98,7 @@ function render(){
   const presentGroups=[...new Set([...knownForCategory.filter(g=>counts[g]),...sectionRows.map(r=>r.group_key||'other')])];
   const mainCats=Object.entries(productCategoryLabels).map(([key,label])=>`<button data-product-category-inner="${key}" class="mainCategoryBtn ${productCategory===key?'active':''}">${label}<small>${rows.filter(r=>r.category===key).length}</small></button>`).join('');
   const groupBtns=[['all','الكل'],...presentGroups.map(g=>[g,productGroupLabel(g)])].map(([key,label])=>`<button data-product-group="${esc(key)}" class="${productGroup===key?'active':''}">${esc(label)}<small>${counts[key]||0}</small></button>`).join('');
-  const playgroundRows=sectionRows.filter(r=>playgroundRowType(r));
-  const playgroundButtons=playgroundRows.length?`<div class="categoryLevel playgroundRowLevel" aria-label="تصنيف صور الألعاب">${Object.entries(playgroundRowNames).map(([key,label])=>{const n=key==='all'?playgroundRows.length:playgroundRows.filter(r=>playgroundRowType(r)===key).length;return key==='all'||n?`<button type="button" data-playground-row="${key}" class="${playgroundRow===key?'active':''}">${label}<small>${n}</small></button>`:''}).join('')}</div>`:'';
-  categoryBar.innerHTML=`<div class="categoryLevel mainCategoryLevel">${mainCats}</div><div class="categoryLevel subCategoryLevel">${groupBtns}<button type="button" class="addGroupBtn" data-add-product-group>+ إضافة قسم</button></div>${playgroundButtons}`;
+  categoryBar.innerHTML=`<div class="categoryLevel mainCategoryLevel">${mainCats}</div><div class="categoryLevel subCategoryLevel">${groupBtns}<button type="button" class="addGroupBtn" data-add-product-group>+ إضافة قسم</button></div>`;
  }else categoryBar.hidden=true;
  $('#stats').innerHTML=`<span>السجلات: ${shown.length}${table==='sm_products'?` في ${productCategoryLabels[productCategory]}`:shown.length!==rows.length?` من ${rows.length}`:''}</span><span>القسم: ${table==='sm_products'?(productGroup==='all'?'الكل':productGroupLabel(productGroup)):specs[table].title}</span>`;
  if(table==='sm_orders'){
